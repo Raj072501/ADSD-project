@@ -15,7 +15,7 @@ from wtforms.validators import DataRequired
 # Flask Application Initialization
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Raj123'
-app.config['UPLOAD_FOLDER'] = './uploads'
+app.config['UPLOAD_FOLDER'] = './static/images'
 
 # Flask-Session Configuration
 app.config.update(
@@ -136,18 +136,24 @@ def add_vehicle():
                 if file.content_type not in ['image/jpeg', 'image/png']:
                     flash('Invalid image type', 'danger')
                     return redirect(url_for('add_vehicle'))
+                
                 if file.content_length > 1024 * 1024:
                     flash('Image size exceeds 1MB', 'danger')
                     return redirect(url_for('add_vehicle'))
+                
+                # Save the file to the static/images folder
+                filename = secure_filename(file.filename)
+                upload_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(upload_path)
 
-                # Read the image file into a binary string
-                image_file_path = file.read()
+                # Save the relative path to the database
+                relative_path = f'images/{filename}'
 
                 # Insert the vehicle data into the database
                 cursor = get_db().cursor()
                 cursor.execute(
                     "INSERT INTO vehicles (car_name, category, make, model, year, engine_type, origin, image_file_path) VALUES (?,?,?,?,?,?,?,?)",
-                    (car_name, category, make, model, year, engine_type, origin, image_file_path)
+                    (car_name, category, make, model, year, engine_type, origin, relative_path)
                 )
                 get_db().commit()
                 flash('Vehicle added successfully!', 'success')

@@ -8,7 +8,13 @@
 </head>
 <body>
     <h1>{{ vehicle.make }}  ({{ vehicle.year }})</h1>
-    <img src="{{ vehicle.image_url }}" />
+    <!-- Check if image_file_path exists before showing the image -->
+    {% if vehicle.image_file_path %}
+        <img src="{{ url_for('static', filename='uploads/' + vehicle.image_file_path) }}" alt="{{ vehicle.make }} {{ vehicle.model }}">
+    {% else %}
+        <p>No image available</p>
+    {% endif %}
+
     <p>Model:{{ vehicle.model }}</p>
     <p>Make: {{ vehicle.make }}</p>
     <p>Model: {{ vehicle.model }}</p>
