@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Add Vehicle</h1>
+<form method="post" action="/add" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    
+    <label for="car_name">Car Name:</label>
+    {{ form.car_name(id='car_name', required=True) }}  <!-- Use WTForms field rendering -->
+    
+    <label for="category">Category:</label>
+    {{ form.category(id='category') }}  <!-- Use WTForms field rendering -->
+    
+    <label for="make">Make:</label>
+    {{ form.make(id='make', required=True) }}  <!-- Use WTForms field rendering -->
+    
+    <label for="model">Model:</label>
+    {{ form.model(id='model', required=True) }}  <!-- Use WTForms field rendering -->
+    
+    <label for="year">Year:</label>
+    {{ form.year(id='year', required=True) }}  <!-- Use WTForms field rendering -->
+    
+    <label for="engine_type">Engine Type:</label>
+    {{ form.engine_type(id='engine_type', required=True) }}  <!-- Use WTForms field rendering -->
+    
+    <label for="origin">Origin:</label>
+    {{ form.origin(id='origin', required=True) }}  <!-- Use WTForms field rendering -->
+    
+    <label for="image">Image:</label>
+    {{ form.image(id='image', required=True) }}  <!-- Use WTForms field rendering -->
+    
+    <button type="submit" class="button">Add Vehicle</button>
+</form>
+<a href="/" class="button">Back to Vehicle List</a>
+{% endblock %}

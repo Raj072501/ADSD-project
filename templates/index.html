@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Vehicle List</h1>
+    <form method="GET" action="{{ url_for('index') }}">
+        <input type="text" name="car_name" placeholder="Search by name">
+        <input type="text" name="category" placeholder="Search by category">
+        <input type="text" name="make" placeholder="Search by make">
+        <input type="text" name="model" placeholder="Search by model">
+        <button type="submit">Search</button>
+    </form>
+    <a href="{{ url_for('add_vehicle') }}" class="button">Add Vehicle</a>
+    <table>
+        <thead>
+            <tr>
+                <th>car_name</th>
+                <th>Category</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Engine Type</th>
+                <th>Origin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehicle in vehicles %}
+            <tr>
+                <td><a href="{{ url_for('view_vehicle', vehicle_id=vehicle.id) }}">{{ vehicle.car_name}}</a></td> 
+                <td>{{ vehicle.category }}</td>
+                <td>{{ vehicle.make }}</td>
+                <td>{{ vehicle.model }}</td>
+                <td>{{ vehicle.year }}</td>
+                <td>{{ vehicle.engine }}</td> 
+                <td>{{ vehicle.origin }}</td>
+                <td>
+                    <form action="{{ url_for('delete_vehicle', vehicle_id=vehicle.id) }}" method="POST" style="display:inline;">
+                        {{ delete_form.hidden_tag() }}
+                        <button type="submit" class="button delete">Delete</button>
+                    </form>
+                    <a href="{{ url_for('update_vehicle', vehicle_id=vehicle.id) }}" class="button update">Update</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

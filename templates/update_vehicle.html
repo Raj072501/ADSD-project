@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Update Vehicle</h1>
+<form method="post" action="/update/{{ vehicle[0] }}" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    
+    <label for="car_name">Car Name:</label>
+    <input type="text" name="car_name" id="car_name" value="{{ vehicle[1] }}" required>
+    
+    <label for="category">Category:</label>
+    <select name="category" id="category">
+        <option value="Car" {% if vehicle[2] == 'Car' %}selected{% endif %}>Car</option>
+        <option value="Truck" {% if vehicle[2] == 'Truck' %}selected{% endif %}>Truck</option>
+        <option value="Bike" {% if vehicle[2] == 'Bike' %}selected{% endif %}>Bike</option>
+    </select>
+    
+    <label for="make">Make:</label>
+    <input type="text" name="make" id="make" value="{{ vehicle[3] }}" required>
+    
+    <label for="model">Model:</label>
+    <input type="text" name="model" id="model" value="{{ vehicle[4] }}" required>
+    
+    <label for="year">Year:</label>
+    <input type="number" name="year" id="year" value="{{ vehicle[5] }}" required>
+    
+    <label for="engine_type">Engine Type:</label>
+    <input type="text" name="engine_type" id="engine_type" value="{{ vehicle[6] }}" required>
+    
+    <label for="origin">Origin:</label>
+    <input type="text" name="origin" id="origin" value="{{ vehicle[7] }}" required>
+    
+    <label for="image">Image:</label>
+    <input type="file" name="image" id="image" accept="image/*">
+    
+    <button type="submit" class="button">Update Vehicle</button>
+</form>
+<a href="/" class="button">Back to Vehicle List</a>
+{% endblock %}
